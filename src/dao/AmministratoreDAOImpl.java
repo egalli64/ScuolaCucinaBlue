@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,11 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		conn = SingletonConnection.getInstance();
 	}
 
-
 	/*
 	 * registrazione di un nuovo amministratore.
 	 * Se già presente si solleva una eccezione
 	 */
+	
 	@Override
 	public void insert(Utente amministratore) throws SQLException{
 
@@ -138,6 +140,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 	
 	public static void main(String[] args) throws Exception{
 		AmministratoreDAO dao= new AmministratoreDAOImpl();
+		
 		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
 //		dao.insert(u);
 //		u.setCognome("Doria");
