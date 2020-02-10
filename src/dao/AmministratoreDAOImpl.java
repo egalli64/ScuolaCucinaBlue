@@ -85,7 +85,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 	@Override
 	public List<Utente> select() throws SQLException{
 
-		ArrayList<Utente> amministratori = new ArrayList<Utente>(); 
+		List<Utente> amministratori = new ArrayList<Utente>(); 
 
 		PreparedStatement ps=conn.prepareStatement("SELECT * FROM amministratori");
 
