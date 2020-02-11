@@ -121,7 +121,6 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		ps.setString(1, idAmministratore);
 
 		ResultSet rs = ps.executeQuery();
-		Utente amministratore =null;
 		if(rs.next()){
 			String idUtente = rs.getString("id_amministratore");
 			String password= rs.getString("password");
@@ -131,11 +130,11 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 			String email= rs.getString("email");
 			String telefono= rs.getString("telefono");
 
-			amministratore = new Utente(idUtente,password,nome,cognome,dataNascita,email,telefono, true);
-			return amministratore;
+			return new Utente(idUtente,password,nome,cognome,dataNascita,email,telefono, true);
 		}
-		else
+		else {
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
+		}
 	}
 	
 	public static void main(String[] args) throws Exception{
