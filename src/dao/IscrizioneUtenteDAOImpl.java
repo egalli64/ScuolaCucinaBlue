@@ -1,8 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entity.Edizione;
 import entity.Utente;
@@ -23,7 +25,11 @@ public class IscrizioneUtenteDAOImpl implements IscrizioneUtenteDAO {
 	 */
 	@Override
 	public void iscriviUtente(int idEdizione, String idUtente) throws SQLException {
-		// TODO Auto-generated method stub
+
+		
+		PreparedStatement ps=conn.prepareStatement("insert into iscritti(id_edizione, id_utente) values (?,?)");
+		ps.setInt(1,idEdizione);
+		ps.setString (2, idUtente);
 
 	}
 
