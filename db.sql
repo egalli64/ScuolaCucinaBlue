@@ -8,7 +8,8 @@ use cucina;
 -- USEGO
 
 SET FOREIGN_KEY_CHECKS=0;
--- GO
+-- GO.
+
 
 
 --
@@ -81,6 +82,7 @@ INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `au
 -- GO
 INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `aula`, `docente`) VALUES(100, 90, '2010-04-28', 7, 'Aula3', 'M. Moretti');
 -- GO
+INSERT INTO `calendario` (`id_edizione`,  `dataInizio`, `durata`, `aula`, `docente`) VALUES(101, '2020-02-12', 7, 'Aula3', 'M. Moretti');
 COMMIT;
 -- GO
 
@@ -169,6 +171,7 @@ INSERT INTO `categoria` (`id_categoria`, `descrizione`) VALUES(54, 'Cucina amato
 -- GO
 INSERT INTO `categoria` (`id_categoria`, `descrizione`) VALUES(55, 'Cucina professionale(corsi per cuochi)');
 -- GO
+INSERT INTO `categoria` (`descrizione`) VALUES('cucina orientale');
 COMMIT;
 -- GO
 
