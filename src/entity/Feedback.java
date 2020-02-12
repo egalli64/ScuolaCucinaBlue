@@ -3,10 +3,11 @@ package entity;
 public class Feedback {
 	
 	private int idFeedback;
-	private String descrizione;
-	private int voto;
 	private int idEdizione;
 	private String idUtente;
+	private String descrizione;
+	private int voto;
+
 	
 	public Feedback(){}
 	
