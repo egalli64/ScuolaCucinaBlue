@@ -1,11 +1,15 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import entity.Categoria;
+import entity.Utente;
 import exceptions.ConnessioneException;
 
 public class CategoriaDAOImpl implements CategoriaDAO {
@@ -70,8 +74,23 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 	 */
 	@Override
 	public Categoria select(int idCategoria) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PreparedStatement ps=conn.prepareStatement("SELECT * FROM categoria where id_categoria =?");
+
+		ps.setInt(1, idCategoria);
+
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			 idCategoria = rs.getInt("id_categoria");
+			String descrizione = rs.getString ("descrizione");
+			
+
+			return new Categoria (idCategoria, descrizione);
+		}
+		else {
+			throw new SQLException("categoria: " + idCategoria + " non presente");
+		}
+		
 	}
 
 	/*
@@ -80,8 +99,23 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 	 */
 	@Override
 	public ArrayList<Categoria> select() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<Categoria> categorie = new ArrayList<Categoria>(); 
+
+		PreparedStatement ps=conn.prepareStatement("SELECT * FROM categoria");
+
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			int idCategoria = rs.getInt("id_categoria");
+			String descrizione= rs.getString("descrizione");
+			
+
+			Categoria lettura = new Categoria(idCategoria, descrizione);
+			categorie.add(lettura);
+		}
+
+		return categorie;
+		
 	}
 
 }

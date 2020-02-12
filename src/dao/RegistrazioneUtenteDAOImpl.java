@@ -47,14 +47,15 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 	public void update(Utente u) throws SQLException {
 
 		PreparedStatement ps = conn.prepareStatement(
-				"UPDATE registrati SET password=?, nome=?, cognome=?, dataNascita=?, email=?, telefono=? where id_amministratore=?");
-		ps.setString(1, u.getPassword());
-		ps.setString(2, u.getNome());
-		ps.setString(3, u.getCognome());
-		ps.setDate(4, new java.sql.Date(u.getDataNascita().getTime()));
-		ps.setString(5, u.getEmail());
-		ps.setString(6, u.getTelefono());
-		ps.setString(7, u.getIdUtente());
+				"UPDATE registrati SET id_utente=?,password=?, nome=?, cognome=?, dataNascita=?, email=?, telefono=? where id_utente=?");
+		ps.setString(1, u.getIdUtente());
+		ps.setString(2, u.getPassword());
+		ps.setString(3, u.getNome());
+		ps.setString(4, u.getCognome());
+		ps.setDate(5, new java.sql.Date(u.getDataNascita().getTime()));
+		ps.setString(6, u.getEmail());
+		ps.setString(7, u.getTelefono());
+		
 		int n = ps.executeUpdate();
 
 		if (n == 0)
@@ -111,14 +112,14 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 	 * eccezione
 	 */
 	@Override
-	public Utente select(String idRegistrato) throws SQLException {
+	public Utente select(String idUtente) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM registrati where id_utente =?");
 
-		ps.setString(1, idRegistrato);
+		ps.setString(1, idUtente);
 
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			String idUtente= rs.getString("id_utente");
+			idUtente= rs.getString("id_utente");
 			String password = rs.getString("password");
 			String nome = rs.getString("nome");
 			String cognome = rs.getString("cognome");
@@ -128,7 +129,7 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 
 			return new Utente(idUtente, password, nome, cognome, dataNascita, email, telefono, false);
 		} else {
-			throw new SQLException("utente: " + idRegistrato + " non presente");
+			throw new SQLException("utente: " + idUtente + " non presente");
 		}
 
 	}
