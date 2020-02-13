@@ -183,6 +183,44 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 
 	}
 
+	//metodo aggiunto per il service!
+	
+	@Override
+	public ArrayList<Edizione> selectCorso(int idCorso) throws SQLException {
+
+		ArrayList<Edizione> edizioni = new ArrayList<Edizione>();
+		PreparedStatement ps = conn.prepareStatement("select * from calendario where id_corso=?");
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			int idEdizione = rs.getInt("id_Edizione");
+			idCorso = rs.getInt("id_corso");
+			Date dataInizio = rs.getDate("dataInizio");
+			int durata = rs.getInt("durata");
+			String aula = rs.getString("aula");
+			String docente = rs.getString("docente");
+
+			Edizione ed = new Edizione(idCorso, dataInizio, durata, aula, docente);
+			ed.setCodice(idEdizione);
+
+			long dataM = dataInizio.getTime();
+			long durataM = durata * 86400000L;
+			Date dataFine = new Date(dataM + durataM);
+
+			if (dataFine.before(new java.util.Date()))
+				ed.setTerminata(true);
+
+			edizioni.add(ed);
+		}
+		return edizioni;
+
+	}
+
+	
+	
+	
+	
+	
 	/*
 	 * lettura di tutte le edizioni a cui un certo utente è iscritto o è stato
 	 * iscritto in passato (vale a dire tutte), presenti nel calendario dei corsi le

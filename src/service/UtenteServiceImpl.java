@@ -45,10 +45,17 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public Utente checkCredenziali(String idUtente, String psw) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Utente utente = daoU.select(idUtente);
+			if (!utente.getPassword().equals(psw)) {
+			throw new DAOException ("password errata");}
+			
+			return utente;
+		} catch (SQLException e) {
+			throw new DAOException("utente non trovato", e);
+		}
+		
 	}
-
 	/*
 	 * cancellazione di un utente dal sistema
 	 * l'utente è cancellabile solo se non vi sono dati correlati.
@@ -58,19 +65,26 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public void cancellaRegistrazioneUtente(String idUtente) throws DAOException {
-		// TODO Auto-generated method stub
+		try {
+			daoU.delete(idUtente);
+		} catch (SQLException e) {
+			throw new DAOException("impossibile cancellare l'utente", e);
+		}
 		
 	}
 
-	/*
+	/**
 	 * modifica tutti i dati di un utente 
 	 * l'utente viene individuato in base a idUtente
 	 * se l'utente non è presente si solleva una eccezione
 	 */
 	@Override
 	public void modificaDatiUtente(Utente u) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			daoU.update(u);
+		} catch (SQLException e) {
+			throw new DAOException("impossibile cancellare l'utente", e);
+		}	
 	}
 
 	/*

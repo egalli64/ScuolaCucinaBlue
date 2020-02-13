@@ -34,15 +34,12 @@ public class RegistrazioneUtenteServlet extends HttpServlet {
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/registraUtente.jsp").forward(request, response);
 		}
 
-		UtenteService serviceU;
 		try {
-			serviceU = new UtenteServiceImpl();
-
-			Utente u = this.getUtenteFromQueryString(request);
-
-
-			serviceU.registrazioneUtente(u);
-			request.setAttribute("user", u);
+			UtenteService service = new UtenteServiceImpl();
+			
+			Utente utente = makeUtente(request);
+			service.registrazioneUtente(utente);
+			request.setAttribute("user", utente);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/registrazioneUtenteOk.jsp").forward(request, response);
 
 		} catch (DAOException | ConnessioneException e) {
@@ -53,7 +50,7 @@ public class RegistrazioneUtenteServlet extends HttpServlet {
 
 	}
 
-	private Utente getUtenteFromQueryString(HttpServletRequest request){
+	private Utente makeUtente(HttpServletRequest request){
 
 		String idUtente = request.getParameter("idUtente");
 		String password = request.getParameter("password");

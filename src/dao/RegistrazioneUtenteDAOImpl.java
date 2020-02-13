@@ -58,9 +58,9 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 		
 		int n = ps.executeUpdate();
 
-		if (n == 0)
+		if (n == 0) {
 			throw new SQLException("utente: " + u.getIdUtente() + " non presente");
-
+		}
 	}
 
 	/*
