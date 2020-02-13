@@ -40,7 +40,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 	/*
 	 * controllo della presenza di un utente in base a idUtente e password
-	 * Se l'utente è presente viene recuperato e ritornato
+	 * Se l'utente è presente viene recuperato e ritornato 
 	 * Se l'utente non è presente si solleva una eccezione
 	 */
 	@Override

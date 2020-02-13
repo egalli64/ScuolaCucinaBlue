@@ -100,6 +100,8 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public CorsoDTO visualizzaSchedaCorso(int idCorso) throws DAOException {
+		
+		//è la pippa di rondone, si trova qui 
 
 		try {
 
