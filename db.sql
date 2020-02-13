@@ -7,6 +7,16 @@ use cucina;
 
 -- USEGO
 
+
+
+
+-- select * from calendario where month(dataInizio) = 2 and year(curdate()) = year(dataInizio); 
+
+
+-- select * from calendario where month(dataInizio) = month(curdate()) and year(dataInizio) = 2020; 
+
+-- select c.id_edizione, i.id_utente, f.descrizione from calendario c join iscritti i on (c.id_edizione = i.id_edizione) join feedback f on (i.id_utente = f.id_utente); 
+
 SET FOREIGN_KEY_CHECKS=0;
 -- GO.
 
