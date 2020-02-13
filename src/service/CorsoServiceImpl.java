@@ -100,25 +100,18 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public CorsoDTO visualizzaSchedaCorso(int idCorso) throws DAOException {
-		
-		//è la pippa di rondone, si trova qui 
-
 		try {
-
 			ArrayList<EdizioneDTO> datied = new ArrayList<EdizioneDTO>();
 			Edizione edizione = new Edizione();
 			List<Utente> utenti = new ArrayList<>();
-			List<Feedback> datifeedback = new ArrayList<>();
-			datifeedback = daoFeedback.selectFeedbackPerCorso(idCorso);
+			List<Feedback> datifeedback = daoFeedback.selectFeedbackPerCorso(idCorso);
 			EdizioneDTO dati = new EdizioneDTO(edizione, datifeedback, utenti);
 			datied.add(dati);
 
-			Corso corso = new Corso();
-			corso = daoCatalogo.select(idCorso);
+			Corso corso = daoCatalogo.select(idCorso);
 			CorsoDTO corsodati = new CorsoDTO(corso, datied);
 
 			return corsodati;
-
 		} catch (SQLException e) {
 			throw new DAOException("errore nella visualizzazione della scheda", e);
 

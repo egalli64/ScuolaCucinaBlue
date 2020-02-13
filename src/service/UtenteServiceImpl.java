@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dao.CatalogoDAO;
 import dao.CatalogoDAOImpl;
+import dao.FeedbackDAO;
 import dao.RegistrazioneUtenteDAO;
 import dao.RegistrazioneUtenteDAOImpl;
 import entity.Feedback;
@@ -16,6 +17,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 	//dichiarare qui tutti i dao di cui si ha bisogno
 	private RegistrazioneUtenteDAO daoU;
+	private FeedbackDAO daoFeedback;
 	//... dichiarazione di altri eventuali DAO
 	
 	//costruire qui tutti i dao di cui si ha bisogno
@@ -56,6 +58,7 @@ public class UtenteServiceImpl implements UtenteService {
 		}
 		
 	}
+	
 	/*
 	 * cancellazione di un utente dal sistema
 	 * l'utente è cancellabile solo se non vi sono dati correlati.
@@ -93,10 +96,13 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public ArrayList<Utente> visualizzaUtentiRegistrati() throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		try {
+			return daoU.select();
+		} catch (SQLException e) {
+			throw new DAOException("nessun utente", e);
 
+		}
+	}
 	/*
 	 * inserisce un feedback per una certa edizione
 	 * Un utente può inserire un feedback solo per i corsi già frequentati (e terminati) e solo se non lo ha già fatto in precedenza (un solo feedback ad utente per edizione)
@@ -104,8 +110,12 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public void inserisciFeedback(Feedback f) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			 daoFeedback.insert(f);
+		} catch (SQLException e) {
+			throw new DAOException("non è possibile inserire il feedback", e);
+
+		}
 	}
 
 	/*
@@ -115,10 +125,13 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public void modificaFeedback(Feedback feedback) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
+		try {
+			 daoFeedback.update(feedback);
+		} catch (SQLException e) {
+			throw new DAOException("il feedback non è modificabile", e);
 
+		}
+	}
 	/*
 	 * eliminazione di un feedback
 	 * il feedback è cancellabile solo da parte dell'utente che lo ha inserito e solo entro un mese dal termine della edizione del corso
@@ -126,8 +139,11 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public void cancellaFeedback(int idFeedback) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
+		try {
+			 daoFeedback.delete(idFeedback);
+		} catch (SQLException e) {
+			throw new DAOException("feedback inesistente", e);
 
+		}
+	}
 }
