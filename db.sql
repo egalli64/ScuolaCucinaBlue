@@ -19,19 +19,17 @@ SET FOREIGN_KEY_CHECKS=0;
 --
 -- Table: amministratori
 --
-CREATE TABLE `amministratori` 
-(
-	`id_amministratore` varchar (50) NOT NULL, 
+drop table if exists amministratori;
+CREATE TABLE `amministratori` (
+	`id_amministratore` varchar (50) PRIMARY KEY, 
 	`password` varchar (50), 
 	`nome` varchar (50), 
 	`cognome` varchar (50), 
 	`dataNascita` date, 
 	`email` varchar (50), 
-	`telefono` varchar (50),
-	PRIMARY KEY (`id_amministratore`)
+	`telefono` varchar (50)
 ); 
 -- GO
-
 --
 -- Dumping Table Data: amministratori
 --
@@ -47,18 +45,17 @@ COMMIT;
 --
 -- Table: calendario
 --
+drop table if exists calendario;
 CREATE TABLE `calendario` 
 (
-	`id_edizione` integer (11) NOT NULL AUTO_INCREMENT , 
-	`id_corso` integer (11), 
+	`id_edizione` integer (11) PRIMARY KEY AUTO_INCREMENT, 
+	`id_corso` integer (11) references catalogo(id_corso), 
 	`dataInizio` date, 
 	`durata` integer (11), 
 	`aula` varchar (50), 
-	`docente` varchar (50),
-	PRIMARY KEY (`id_edizione`)
+	`docente` varchar (50)
 );
 -- GO
-
 --
 -- Dumping Table Data: calendario
 --
@@ -76,7 +73,7 @@ INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `au
 -- GO
 INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `aula`, `docente`) VALUES(97, 93, '2010-05-30', 7, 'Aula 3', 'C. Amato');
 -- GO
-INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `aula`, `docente`) VALUES(98, 94, '2010-06-01', 5, 'Aula 2', '    D. Priori');
+INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `aula`, `docente`) VALUES(98, 94, '2010-06-01', 5, 'Aula 2', 'D. Priori');
 -- GO
 INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `aula`, `docente`) VALUES(99, 95, '2010-05-30', 14, 'Aula 1', 'F. Beatini');
 -- GO
@@ -85,25 +82,22 @@ INSERT INTO `calendario` (`id_edizione`, `id_corso`, `dataInizio`, `durata`, `au
 INSERT INTO `calendario` (`id_edizione`,  `dataInizio`, `durata`, `aula`, `docente`) VALUES(101, '2020-02-12', 7, 'Aula3', 'M. Moretti');
 COMMIT;
 -- GO
-
 --
 -- Index: delCorso
 --
-ALTER TABLE `cucina`.`calendario` ADD INDEX delCorso (id_corso );
+ALTER TABLE `cucina`.`calendario` ADD INDEX delCorso (id_corso);
 -- GO
-
 --
 -- Table: catalogo
 --
-CREATE TABLE `catalogo` 
-(
-	`id_corso` integer (11) NOT NULL AUTO_INCREMENT , 
+drop table if exists catalogo;
+CREATE TABLE `catalogo` (
+	`id_corso` integer (11) PRIMARY KEY AUTO_INCREMENT, 
 	`titolo` varchar (50), 
-	`id_categoria` integer (11), 
+	`id_categoria` integer (11) references categoria(id_categoria), 
 	`numeroMaxPartecipanti` integer (11), 
 	`costo` double (13,2), 
-	`descrizione` varchar (2000),
-	PRIMARY KEY (`id_corso`)
+	`descrizione` varchar (2000)
 );
 -- GO
 
@@ -132,24 +126,20 @@ INSERT INTO `catalogo` (`id_corso`, `titolo`, `id_categoria`, `numeroMaxPartecip
 -- GO
 COMMIT;
 -- GO
-
 --
 -- Index: categoriaDelCorso
 --
 ALTER TABLE `cucina`.`catalogo` ADD INDEX categoriaDelCorso (id_categoria );
 -- GO
-
 --
 -- Table: categoria
 --
-CREATE TABLE `categoria` 
-(
-	`id_categoria` integer (11) NOT NULL AUTO_INCREMENT , 
-	`descrizione` varchar (50),
-	PRIMARY KEY (`id_categoria`)
+drop table if exists categoria;
+CREATE TABLE `categoria` (
+	`id_categoria` integer (11) PRIMARY KEY AUTO_INCREMENT, 
+	`descrizione` varchar (50)
 );
 -- GO
-
 --
 -- Dumping Table Data: categoria
 --
@@ -174,21 +164,18 @@ INSERT INTO `categoria` (`id_categoria`, `descrizione`) VALUES(55, 'Cucina profe
 INSERT INTO `categoria` (`descrizione`) VALUES('cucina orientale');
 COMMIT;
 -- GO
-
 --
 -- Table: feedback
 --
-CREATE TABLE `feedback` 
-(
-	`id_feedback` integer (11) NOT NULL AUTO_INCREMENT , 
-	`id_edizione` integer (11), 
-	`id_utente` varchar (50) NOT NULL, 
+drop table if exists feedback;
+CREATE TABLE `feedback` (
+	`id_feedback` integer (11) PRIMARY KEY AUTO_INCREMENT, 
+	`id_edizione` integer (11) references calendario(id_edizione), 
+	`id_utente` varchar (50) NOT NULL references registrati(id_utente), 
 	`descrizione` varchar (50), 
-	`voto` integer (11),
-	PRIMARY KEY (`id_feedback`)
-); 
+	`voto` integer (11)
+    ); 
 -- GO
-
 --
 -- Dumping Table Data: feedback
 --
@@ -206,30 +193,26 @@ INSERT INTO `feedback` (`id_feedback`, `id_edizione`, `id_utente`, `descrizione`
 -- GO
 COMMIT;
 -- GO
-
 --
 -- Index: dellEdizione
 --
 ALTER TABLE `cucina`.`feedback` ADD INDEX dellEdizione (id_edizione );
 -- GO
-
 --
 -- Index: dellUtente
 --
 ALTER TABLE `cucina`.`feedback` ADD INDEX dellUtente (id_utente );
 -- GO
-
 --
 -- Table: iscritti
 --
-CREATE TABLE `iscritti` 
-(
-	`id_edizione` integer (11) NOT NULL DEFAULT 0, 
-	`id_utente` varchar (50) NOT NULL,
+drop table if exists iscritti;
+CREATE TABLE `iscritti` (
+	`id_edizione` integer (11) NOT NULL DEFAULT 0 references registrati(id_utente), 
+	`id_utente` varchar (50) NOT NULL references calendario(id_edizione),
 	PRIMARY KEY (`id_edizione`, `id_utente`)
-);
+    );
 -- GO
-
 --
 -- Dumping Table Data: iscritti
 --
@@ -241,26 +224,22 @@ INSERT INTO `iscritti` (`id_edizione`, `id_utente`) VALUES(100, 'veronica');
 -- GO
 COMMIT;
 -- GO
-
 --
 -- Index: utenteIscritto
 --
 ALTER TABLE `cucina`.`iscritti` ADD INDEX utenteIscritto (id_utente );
 -- GO
-
 --
 -- Table: mail
 --
-CREATE TABLE `mail` 
-(
-	`id` integer (11) NOT NULL AUTO_INCREMENT , 
+drop table if exists mail;
+CREATE TABLE `mail` (
+	`id` integer (11) PRIMARY KEY AUTO_INCREMENT, 
 	`subject` varchar (50), 
 	`data` varchar (50), 
-	`body` varchar (200),
-	PRIMARY KEY (`id`)
+	`body` varchar (200)
 );
 -- GO
-
 --
 -- Dumping Table Data: mail
 --
@@ -268,23 +247,20 @@ BEGIN;
 -- GO
 COMMIT;
 -- GO
-
 --
 -- Table: registrati
 --
-CREATE TABLE `registrati` 
-(
-	`id_utente` varchar (50) NOT NULL, 
+drop table if exists registrati;
+CREATE TABLE `registrati` (
+	`id_utente` varchar (50) PRIMARY KEY, 
 	`password` varchar (50), 
 	`nome` varchar (50), 
 	`cognome` varchar (50), 
 	`dataNascita` date, 
 	`email` varchar (50), 
-	`telefono` varchar (50),
-	PRIMARY KEY (`id_utente`)
+	`telefono` varchar (50)
 );
 -- GO
-
 --
 -- Dumping Table Data: registrati
 --
@@ -308,47 +284,7 @@ INSERT INTO `registrati` (`id_utente`, `password`, `nome`, `cognome`, `dataNasci
 -- GO
 COMMIT;
 -- GO
-
---
--- Dumping Tables Foreign Keys
---
-
---
--- Foreign Key Constraint: delCorso
---
-ALTER TABLE `calendario` ADD CONSTRAINT delCorso FOREIGN KEY (id_corso) REFERENCES `catalogo`(id_corso);
 -- GO
-
---
--- Foreign Key Constraint: categoriaDelCorso
---
-ALTER TABLE `catalogo` ADD CONSTRAINT categoriaDelCorso FOREIGN KEY (id_categoria) REFERENCES `categoria`(id_categoria);
--- GO
-
---
--- Foreign Key Constraint: dellUtente
---
-ALTER TABLE `feedback` ADD CONSTRAINT dellUtente FOREIGN KEY (id_utente) REFERENCES `registrati`(id_utente);
--- GO
-
---
--- Foreign Key Constraint: dellEdizione
---
-ALTER TABLE `feedback` ADD CONSTRAINT dellEdizione FOREIGN KEY (id_edizione) REFERENCES `calendario`(id_edizione);
--- GO
-
---
--- Foreign Key Constraint: utenteIscritto
---
-ALTER TABLE `iscritti` ADD CONSTRAINT utenteIscritto FOREIGN KEY (id_utente) REFERENCES `registrati`(id_utente);
--- GO
-
---
--- Foreign Key Constraint: allEdizione
---
-ALTER TABLE `iscritti` ADD CONSTRAINT allEdizione FOREIGN KEY (id_edizione) REFERENCES `calendario`(id_edizione);
--- GO
-
 --
 -- Dumping Triggers
 --
