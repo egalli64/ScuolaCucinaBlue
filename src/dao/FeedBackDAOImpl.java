@@ -183,25 +183,45 @@ public class FeedBackDAOImpl implements FeedbackDAO {
 		} return feedbacks; 
 	}
 	
-//	@Override
-//	public ArrayList<Feedback> selectPerMese(int mese) throws SQLException {
-//		
-//		ArrayList<Feedback> feedbacks = new ArrayList<Feedback>(); 
-//		PreparedStatement ps = conn.prepareStatement("SELECT f.descrizione from catalogo a join calendario c on (a.id_corso=? = c.id_corso) join feedback f on (f.id_edizione = c.id_edizione");
-//		
-//		ResultSet rs = ps.executeQuery();
-//		while (rs.next()) {
-//			
-//			int idEdizione = rs.getInt("id_edizione");
-//			String idUtente = rs.getString("id_utente");
-//			String descrizione = rs.getString("descrizione");
-//			int voto = rs.getInt("voto");
-//			
-//			Feedback feedback = new Feedback(idEdizione, idUtente, descrizione, voto);
-//			feedbacks.add(feedback); 
-//			
-//		} return feedbacks; 
-//	}
+	@Override
+	public ArrayList<Feedback> selectPerMese(int mese) throws SQLException {
+		
+		ArrayList<Feedback> feedbacks = new ArrayList<Feedback>(); 
+		PreparedStatement ps = conn.prepareStatement("SELECT c.id_edizione, i.id_utente, f.descrizione from calendario c join iscritti i on (c.id_edizione = i.id_edizione) join feedback f on (i.id_utente = f.id_utente) where month(dataInizio) = ? and year(curdate()) = year(dataInizio)");
+		
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			
+			int idEdizione = rs.getInt("id_edizione");
+			String idUtente = rs.getString("id_utente");
+			String descrizione = rs.getString("descrizione");
+			int voto = rs.getInt("voto");
+			
+			Feedback feedback = new Feedback(idEdizione, idUtente, descrizione, voto);
+			feedbacks.add(feedback); 
+			
+		} return feedbacks; 
+	}
+	
+	@Override
+	public ArrayList<Feedback> selectPerAnno(int anno) throws SQLException {
+		
+		ArrayList<Feedback> feedbacks = new ArrayList<Feedback>(); 
+		PreparedStatement ps = conn.prepareStatement("SELECT c.id_edizione, i.id_utente, f.descrizione from calendario c join iscritti i on (c.id_edizione = i.id_edizione) join feedback f on (i.id_utente = f.id_utente) where year(dataInizio) = ? and month(curdate()) = month(dataInizio)");
+		
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			
+			int idEdizione = rs.getInt("id_edizione");
+			String idUtente = rs.getString("id_utente");
+			String descrizione = rs.getString("descrizione");
+			int voto = rs.getInt("voto");
+			
+			Feedback feedback = new Feedback(idEdizione, idUtente, descrizione, voto);
+			feedbacks.add(feedback); 
+			
+		} return feedbacks; 
+	}
 
 
 }
