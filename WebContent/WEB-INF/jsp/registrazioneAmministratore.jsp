@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link rel="stylesheet" type="text/css" href="css/regUtente.css" />
+<!--  linkare  -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <html>
@@ -76,6 +76,9 @@
 			<td width="40%"><c:forEach items="${lista}" var="errore">
 								<c:if test="${errore.campoValidato=='telefono'}" > ${errore.descrizioneErrore}</c:if>
 							</c:forEach></td></tr>
+		
+			
+		
 	</table>
 	<button type="submit" class="btn btn-outline-danger" >Registrati :) </button>
    </form>
