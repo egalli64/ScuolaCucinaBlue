@@ -2,6 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/regUtente.css" />
 <html>
  <body>
@@ -9,7 +12,7 @@
 	<table>
 	  
 		<tr height="50" align="center">
-			<th colspan="3" valign="middle">REGISTRAZIONE UTENTE</th>
+			<th id=top1 colspan="3" valign="middle">REGISTRAZIONE UTENTE</th>
 		</tr>
 
 		<tr height="50" >
@@ -74,11 +77,18 @@
 			<td width="40%"><c:forEach items="${lista}" var="errore">
 								<c:if test="${errore.campoValidato=='telefono'}" > ${errore.descrizioneErrore}</c:if>
 							</c:forEach></td></tr>
-		<tr height="50">
-			<th colspan="3" valign="middle"><input type="submit" value="registra" ><br></th>
+		  <tr height="50">
+			<th id=top2 valign="middle">
+			<button type="submit" class="btn btn-outline-danger"> Registrati:)</button> 
+			<br>
+			</th>
 		</tr>
+		
 	</table>
+	
+	
    </form>
+   
   </body>
 </html>
 

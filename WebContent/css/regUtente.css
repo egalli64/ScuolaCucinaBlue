@@ -1,6 +1,18 @@
 body {
-	background-image: url(../img/fuoco.jpg);
-	background-size: 1900px 970px;
+	background-image: url(../img/lei.jpg);
+	background-size: 1999px 1000px;
     background-repeat:no-repeat;
 	background-margin: 100%;
+}
+
+td,th{
+	color: #d3d3d3;
+	font-family: Palatino Linotype;
+}
+table {
+	margin-top:10%;
+	margin-left: 10%;
+}
+#top1{
+	font-size: 25px; 
 }
