@@ -1,0 +1,1 @@
+<jsp:forward page="/WEB-INF/jsp/registrazioneAmministratore.jsp"></jsp:forward>

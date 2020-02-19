@@ -11,7 +11,7 @@
 	<table>
 	  
 		<tr height="50" align="center">
-			<th valign="middle">REGISTRAZIONE AMMINISTRATORE</th>
+			<th id=top1 colspan= "3" valign="middle">REGISTRAZIONE AMMINISTRATORE</th>
 		</tr>
 
 		<tr height="50" >
@@ -76,8 +76,15 @@
 			<td width="40%"><c:forEach items="${lista}" var="errore">
 								<c:if test="${errore.campoValidato=='telefono'}" > ${errore.descrizioneErrore}</c:if>
 							</c:forEach></td></tr>
+							
+							<tr height="50">
+			<th id=top2 valign="middle">
+			<button type="submit" class="btn btn-outline-danger"> Registrati:)</button> 
+			<br>
+			</th>
+		</tr>
 	</table>
-	<button type="submit" class="btn btn-outline-danger" >Registrati :) </button>
+	
    </form>
   </body>
 </html>
